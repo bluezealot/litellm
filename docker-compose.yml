@@ -4,7 +4,7 @@ services:
       context: .
       args:
         target: runtime
-    image: docker.litellm.ai/berriai/litellm:main-stable
+    image: docker.litellm.ai/berriai/litellm:main-1.82.0-stable
     #########################################
     ## Uncomment these lines to start proxy with a config.yaml file ##
     # volumes:
@@ -41,7 +41,9 @@ services:
     ports:
       - "5432:5432"
     volumes:
-      - postgres_data:/var/lib/postgresql/data # Persists Postgres data across container restarts
+      # Use host path for easy data management and migration
+      # Change this to your desired host path
+      - ./postgres_data:/var/lib/postgresql/data
     healthcheck:
       test: ["CMD-SHELL", "pg_isready -d litellm -U llmproxy"]
       interval: 1s
